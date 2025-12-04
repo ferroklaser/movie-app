@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Error getting all movies');
     }
 });
 
@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
         res.json(result.rows[0]);
     } catch (err) {
         console.error(err.message);
+        res.status(500).send('Error inserting movie');
     }
 });
 
@@ -36,6 +37,7 @@ router.delete('/:id', async (req, res) => {
         res.json('Movie deleted successfully');
     } catch (err) {
         console.error(err.message);
+        res.status(500).send('Error deleting movie');
     }
 })
 
