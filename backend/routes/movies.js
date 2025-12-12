@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM movies');
-        res.json(result.rows);
+        res.status(200).json(result.rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error getting all movies');
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
             'INSERT INTO movies (api_id, title, poster_url, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [api_id, title, poster_url, rating, release_date]);
         //response back to front end so it knows to update
-        res.json(result.rows[0]);
+        res.status(200).json(result.rows[0]);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error inserting movie');
@@ -34,7 +34,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await pool.query('DELETE FROM movies WHERE id = $1', [id]);
-        res.json('Movie deleted successfully');
+        res.status(204).json('Movie deleted successfully');
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error deleting movie');
