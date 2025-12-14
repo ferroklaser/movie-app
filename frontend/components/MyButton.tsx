@@ -1,14 +1,12 @@
-import React, {MouseEventHandler} from "react";
+import React from "react";
 
-type ButtonProps = {
-    label: string;
-    onClick : MouseEventHandler<HTMLButtonElement>
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    label?: string;
 }
 
-
-const MyButton = ({ label, onClick } : ButtonProps) => {
+const MyButton = ({ label, ...props} : ButtonProps) => {
     return (
-        <button className="bg-blue-500 rounded-full px-4 text-neutral-50 w-30 h-20" onClick={onClick}>{label}</button>
+        <button className="bg-blue-500 rounded-full px-4 py-2 text-neutral-50 m-4" {...props}>{label}</button>
     )
 }
 
