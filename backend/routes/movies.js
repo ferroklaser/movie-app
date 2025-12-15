@@ -34,7 +34,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await pool.query('DELETE FROM movies WHERE id = $1', [id]);
-        res.status(204).json('Movie deleted successfully');
+        res.status(200).json('Movie deleted successfully');
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error deleting movie');
