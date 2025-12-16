@@ -28,7 +28,7 @@ const Form = ({}) => {
                 <TextInput name="poster url" placeholder="url" />
                 <TextInput name="rating" placeholder="rating" />
                 <TextInput name="release_date" placeholder="release date" />
-                <MyButton type="submit" label="Add" />
+                <MyButton type="submit" label="Add" style={{backgroundColor: 'white'}} />
             </form>
         </div>
     );
