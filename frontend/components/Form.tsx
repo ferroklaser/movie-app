@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import MyButton from "./MyButton";
 import TextInput from "./TextInput";
 
-const Form = ({}) => {
+const Form = ({isVisible, setVisible} : {isVisible : boolean, setVisible : React.Dispatch<React.SetStateAction<boolean>> }) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
@@ -20,6 +20,10 @@ const Form = ({}) => {
         console.log(await response.json());
     }
 
+    const closeForm = () => {
+        setVisible(false);
+    }
+
     return (
         <div className="bg-gray-300 w-[350px] h-[300px] p-5 rounded-lg">
             <form className="flex flex-col items-center" onSubmit={e => {handleSubmit(e);}}>
@@ -28,7 +32,10 @@ const Form = ({}) => {
                 <TextInput name="poster url" placeholder="url" />
                 <TextInput name="rating" placeholder="rating" />
                 <TextInput name="release_date" placeholder="release date" />
-                <MyButton type="submit" label="Add" style={{backgroundColor: 'white'}} />
+                <div>
+                    <MyButton type="submit" label="Add" style={{backgroundColor: 'white', width: 120}} />
+                    <MyButton label="Cancel" style={{backgroundColor: 'white'}} onClick={closeForm}/>
+                </div>
             </form>
         </div>
     );
