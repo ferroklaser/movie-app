@@ -24,7 +24,7 @@ const MovieList = () => {
     )
 
     return (
-        <div>
+        <div className="grid grid-cols-5 gap-5">
             {movieCards}
         </div>
     )

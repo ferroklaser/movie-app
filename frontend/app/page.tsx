@@ -14,8 +14,8 @@ export default function Home() {
 
   return (
     <div className="flex justify-center flex-col">
-      <div className="flex justify-center items-center h-screen">
-        {isFormVisible && <Form isVisible={isFormVisible} setVisible={setFormVisible} style={{ position: 'fixed' }}/>}
+      <div className="flex justify-center">
+        {isFormVisible && <Form isVisible={isFormVisible} setVisible={setFormVisible} style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}/>}
         <MovieList />
       </div>
       <div className="flex justify-end">

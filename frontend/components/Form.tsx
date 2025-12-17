@@ -27,8 +27,8 @@ const Form = ({isVisible, setVisible, ...props} :
     }
 
     return (
-        <div className="bg-gray-300 w-[350px] h-[300px] p-5 rounded-lg" {...props}>
-            <form className="flex flex-col items-center" onSubmit={e => {handleSubmit(e);}}>
+        <div className="bg-gray-300 w-full max-w-sm h-auto p-5 rounded-lg" {...props}>
+            <form className="flex flex-col items-center w-full" onSubmit={e => {handleSubmit(e);}}>
                 <TextInput name="api_id" placeholder="api_id" />
                 <TextInput name="title" placeholder="title" />
                 <TextInput name="poster url" placeholder="url" />
