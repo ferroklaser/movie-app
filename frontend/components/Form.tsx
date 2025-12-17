@@ -2,7 +2,9 @@ import { FormEvent } from "react";
 import MyButton from "./MyButton";
 import TextInput from "./TextInput";
 
-const Form = ({isVisible, setVisible} : {isVisible : boolean, setVisible : React.Dispatch<React.SetStateAction<boolean>> }) => {
+const Form = ({isVisible, setVisible, ...props} : 
+    {isVisible : boolean, setVisible : React.Dispatch<React.SetStateAction<boolean>> } 
+    & React.HTMLAttributes<HTMLDivElement>) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
@@ -25,7 +27,7 @@ const Form = ({isVisible, setVisible} : {isVisible : boolean, setVisible : React
     }
 
     return (
-        <div className="bg-gray-300 w-[350px] h-[300px] p-5 rounded-lg">
+        <div className="bg-gray-300 w-[350px] h-[300px] p-5 rounded-lg" {...props}>
             <form className="flex flex-col items-center" onSubmit={e => {handleSubmit(e);}}>
                 <TextInput name="api_id" placeholder="api_id" />
                 <TextInput name="title" placeholder="title" />
