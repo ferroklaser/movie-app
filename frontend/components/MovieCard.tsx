@@ -1,14 +1,12 @@
 import React from "react";
+import MyButton from "./MyButton";
+import { Movie } from "./MovieList";
 
-interface MovieProps {
-    title : string,
-    posterUrl : string, 
-    rating : number,
-    releaseDate : string
-
+interface MovieCardProps extends Movie {
+    onDelete: () => void
 }
 
-const MovieCard = ({ title, posterUrl, rating, releaseDate } : MovieProps) => {
+const MovieCard = ({ id, title, posterUrl, rating, releaseDate, onDelete } : MovieCardProps) => {
     return (
         <div className="flex flex-col border w-full items-center m-10">
             <div className="flex m-2">
@@ -18,6 +16,10 @@ const MovieCard = ({ title, posterUrl, rating, releaseDate } : MovieProps) => {
                 <div>Title: {title}</div>
                 <div>Rating: {rating}</div>
                 <div>Release Date: {releaseDate}</div>
+            </div>
+            <div>
+                <MyButton label="Like" />
+                <MyButton label="Delete" onClick={onDelete}/>
             </div>
         </div>
     )

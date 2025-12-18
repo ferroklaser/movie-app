@@ -5,6 +5,7 @@ import TextInput from "./TextInput";
 const Form = ({isVisible, setVisible, ...props} : 
     {isVisible : boolean, setVisible : React.Dispatch<React.SetStateAction<boolean>> } 
     & React.HTMLAttributes<HTMLDivElement>) => {
+        
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
@@ -35,7 +36,7 @@ const Form = ({isVisible, setVisible, ...props} :
                 <TextInput name="rating" placeholder="rating" />
                 <TextInput name="release_date" placeholder="release date" />
                 <div>
-                    <MyButton type="submit" label="Add" style={{backgroundColor: 'white', width: 120}} />
+                    <MyButton type="submit" label="Add" style={{backgroundColor: 'white' }} />
                     <MyButton label="Cancel" style={{backgroundColor: 'white'}} onClick={closeForm}/>
                 </div>
             </form>
