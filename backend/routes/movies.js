@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 //Delete a movie
+//: is to represent a variable
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
