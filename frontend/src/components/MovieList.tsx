@@ -27,43 +27,73 @@ const MovieList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:3000/movies", {
+                const response = await fetch("http://localhost:3000/movies/now-playing", {
                     method: "GET",
                     headers: {
-                        "Content-Type": "application/json"
-                    },
+                        "Content-Type" : "application/json"
+                    }
                 });
-
                 const data = await response.json();
 
-                // map returns new array
-                const formattedData = data.map((movie : any) => ({
+                const formattedData = data.results.map((movie : any) => ({
                     id: movie.id,
                     title: movie.title,
-                    posterUrl: movie.poster_url,
-                    rating: movie.rating,
+                    posterUrl: 'https://image.tmdb.org/t/p/original/' + movie.poster_path,
+                    rating: movie.vote_average,
                     releaseDate: new Date(movie.release_date).toLocaleDateString()
-                }))
+                }));
 
                 setMovies(formattedData);
-            } catch (error) {
-                console.log("GET error")
+            } catch (err : any) {
+                console.log(err.message);
             }
         }
-        
+
         fetchData();
 
         return () => {}
     }, []);
 
-    const movieCards = movies.map(movie => 
-        <MovieCard key={movie.id} 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await fetch("http://localhost:3000/movies", {
+    //                 method: "GET",
+    //                 headers: {
+    //                     "Content-Type": "application/json"
+    //                 },
+    //             });
+
+    //             const data = await response.json();
+
+    //             // map returns new array
+    //             const formattedData = data.map((movie : any) => ({
+    //                 id: movie.id,
+    //                 title: movie.title,
+    //                 posterUrl: movie.poster_url,
+    //                 rating: movie.rating,
+    //                 releaseDate: new Date(movie.release_date).toLocaleDateString()
+    //             }))
+
+    //             setMovies(formattedData);
+    //         } catch (error) {
+    //             console.log("GET error")
+    //         }
+    //     }
+        
+    //     fetchData();
+
+    //     return () => {}
+    // }, []);
+
+    const movieCards = movies.map(movie =>
+        <MovieCard key={movie.id}
             id={movie.id}
-             title={movie.title} 
-             posterUrl={movie.posterUrl} 
-             rating={movie.rating} 
-             releaseDate={movie.releaseDate}
-             onDelete={() => {handleDelete(movie.id)}}/>
+            title={movie.title}
+            posterUrl={movie.posterUrl}
+            rating={movie.rating}
+            releaseDate={movie.releaseDate}
+            onDelete={() => { handleDelete(movie.id) }} />
     )
 
     return (
