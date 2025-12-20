@@ -1,8 +1,8 @@
 
 "use client";
-import Form from "@/components/Form";
-import MovieList from "@/components/MovieList";
-import MyButton from "@/components/MyButton";
+import Form from "@/src/components/Form";
+import MovieList from "@/src/components/MovieList";
+import MyButton from "@/src/components/MyButton";
 import { useState } from "react";
 
 export default function Home() {
