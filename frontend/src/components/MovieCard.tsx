@@ -8,7 +8,7 @@ interface MovieCardProps extends Movie {
 
 const MovieCard = ({ id, title, posterUrl, rating, releaseDate, onDelete } : MovieCardProps) => {
     return (
-        <div className="flex flex-col border w-full items-center m-10">
+        <div className="flex flex-col border w-full items-center my-4">
             <div className="flex m-2">
                 <img src={posterUrl} alt="new"/>
             </div>
