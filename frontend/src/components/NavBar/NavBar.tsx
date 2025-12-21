@@ -1,11 +1,16 @@
 import { blue } from "@/src/resources/colors";
-import NavBarItem from "./NavBarItem";
+import NavBarItem, { NavBarItemProps } from "./NavBarItem";
 
 const NavBar = () => {
+    const nowPlaying : NavBarItemProps = {
+        label : "Now Playing",
+        to : "/now-playing"
+    }
+
     return (
         <div className="flex w-full h-[4rem] items-center justify-end m-0" style={{ backgroundColor: blue }}>
             <div>
-                <NavBarItem label="My List"/>
+                <NavBarItem {...nowPlaying}/>
             </div>
         </div>
     )

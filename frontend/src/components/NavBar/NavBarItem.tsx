@@ -1,11 +1,23 @@
+'use client'
 import { white } from "@/src/resources/colors";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const NavBarItem = ({ label }: { label: string }) => {
+export interface NavBarItemProps {
+    label: string,
+    to: string
+}
+
+const NavBarItem = ({ label, to } : NavBarItemProps) => {
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`${to}`)
+    }
 
     return (
         <div className="cursor-pointer text-xl p-6 font-normal"
-            style={{ color: white }}>
+            style={{ color: white }}
+            onClick={handleClick}>
             {label}
         </div>
     )
