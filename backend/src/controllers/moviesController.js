@@ -45,7 +45,6 @@ export const getNowPlayingMovies = async (req, res) => {
     try {
         const result = await fetch(TMDB_BASE_URL + `now_playing?language=en-US&page=1&api_key=${TMDB_API_KEY}`);
         const data = await result.json();
-        console.log(data);
         res.status(200).json(data);
     } catch (err) {
         console.error(err.message);
