@@ -1,5 +1,7 @@
 'use client'
+import MovieCard from "@/src/components/MovieCard";
 import MovieList, { Movie } from "@/src/components/MovieList"
+import MyButton from "@/src/components/MyButton";
 import { useEffect, useState } from "react"
 
 const MyList = () => {
@@ -47,8 +49,22 @@ const MyList = () => {
         return () => {}
     }, []);
 
+    const movieCards = movies.map(movie =>
+        <MovieCard key={movie.id}
+            id={movie.id}
+            title={movie.title}
+            posterUrl={movie.posterUrl}
+            rating={movie.rating}
+            releaseDate={movie.releaseDate}
+        >
+            <MyButton label="View" onClick={() => {}} />
+            <MyButton label="Remove" onClick={() => handleDelete(movie.id)} />
+        </MovieCard>)
+
     return (
-        <MovieList movies={movies} onDelete={handleDelete}/>
+        <MovieList>
+            {movieCards}
+        </MovieList> 
     )
 }
 

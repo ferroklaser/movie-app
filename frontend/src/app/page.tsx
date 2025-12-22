@@ -1,10 +1,8 @@
 
 "use client";
 import Form from "@/src/components/Form";
-import MovieList from "@/src/components/MovieList";
 import MyButton from "@/src/components/MyButton";
 import { useState } from "react";
-import NavBar from "../components/NavBar/NavBar";
 
 export default function Home() {
   const [isFormVisible, setFormVisible] = useState(false);

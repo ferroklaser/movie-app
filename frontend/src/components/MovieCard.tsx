@@ -1,12 +1,11 @@
 import React from "react";
-import MyButton from "./MyButton";
 import { Movie } from "./MovieList";
 
 interface MovieCardProps extends Movie {
-    onDelete: () => void
+    children? : React.ReactNode
 }
 
-const MovieCard = ({ id, title, posterUrl, rating, releaseDate, onDelete } : MovieCardProps) => {
+const MovieCard = ({ id, title, posterUrl, rating, releaseDate, children}: MovieCardProps) => {
     return (
         <div className="flex flex-col border w-full items-center my-4">
             <div className="flex m-2">
@@ -18,8 +17,7 @@ const MovieCard = ({ id, title, posterUrl, rating, releaseDate, onDelete } : Mov
                 <div>Release Date: {releaseDate}</div>
             </div>
             <div>
-                <MyButton label="Like" />
-                <MyButton label="Delete" onClick={onDelete}/>
+                {children}
             </div>
         </div>
     )

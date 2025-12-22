@@ -10,25 +10,13 @@ export interface Movie {
 }
 
 export interface MovieListProps {
-    movies: Movie[],
-    onDelete: (id : number) => void
+    children? : React.ReactNode
 }
 
-const MovieList = ({ movies, onDelete } : MovieListProps) => {
-
-    const movieCards = movies.map(movie =>
-        <MovieCard key={movie.id}
-            id={movie.id}
-            title={movie.title}
-            posterUrl={movie.posterUrl}
-            rating={movie.rating}
-            releaseDate={movie.releaseDate}
-            onDelete={() => { onDelete }} />
-    )
-
+const MovieList = ({children } : MovieListProps) => {
     return (
         <div className="grid grid-cols-5 gap-5 m-5">
-            {movieCards}
+            {children}
         </div>
     )
 }
