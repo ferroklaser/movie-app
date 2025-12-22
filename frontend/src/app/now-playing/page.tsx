@@ -3,6 +3,7 @@ import MovieCard from "@/src/components/MovieCard";
 import MovieList, { Movie } from "@/src/components/MovieList"
 import MyButton from "@/src/components/MyButton";
 import { useState, useEffect } from "react";
+import { getPosterUrl } from "@/src/utilities/getPosterUrl";
 
 const NowPlaying = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -20,7 +21,7 @@ const NowPlaying = () => {
                 const formattedData = data.results.map((movie : any) => ({
                     id: movie.id,
                     title: movie.title,
-                    posterUrl: 'https://image.tmdb.org/t/p/original/' + movie.poster_path,
+                    posterUrl: getPosterUrl(movie.poster_path),
                     rating: movie.vote_average, 
                     releaseDate: new Date(movie.release_date).toLocaleDateString()
                 }));
