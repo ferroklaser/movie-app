@@ -22,10 +22,15 @@ export const insertUserMovie = async (req, res) => {
             'INSERT INTO movies (tmdb_id, title, poster_path, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [id, title, posterPath, rating, releaseDate]
         );
-        res.status(200).json(result.rows[0]);
+        res.status(201).json(result.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json('Error inserting user movie');
+        if (err.code === '23505') {
+            res.status(409).json({ error : "The movie is already in your list."})
+        } else {
+            console.error(err.message);
+            res.status(500).send('Error inserting user movie');
+        }
+        
     }
 }
 
@@ -49,5 +54,16 @@ export const getNowPlayingMovies = async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error getting now playing movies from TMDB.');
+    }
+}
+
+export const getUpcomingMovies = async (req, res) => {
+    try {
+        const result = await fetch(TMDB_BASE_URL + `upcoming?language=en-US-page=1&api_key=${TMDB_API_KEY}`);
+        const data = await result.json();
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error getting upcoming movies from TMDB.');
     }
 }

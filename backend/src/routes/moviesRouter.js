@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserMovie, insertUserMovie, deleteUserMovie, getNowPlayingMovies } from '../controllers/moviesController.js';
+import { getUserMovie, insertUserMovie, deleteUserMovie, getNowPlayingMovies, getUpcomingMovies } from '../controllers/moviesController.js';
 
 const router = express.Router();
 
@@ -13,6 +13,8 @@ router.post('/', insertUserMovie);
 //: is to represent a variable
 router.delete('/:id', deleteUserMovie);
 
-router.get('/now-playing', getNowPlayingMovies)
+router.get('/now-playing', getNowPlayingMovies);
+
+router.get('/upcoming', getUpcomingMovies);
 
 export default router;
