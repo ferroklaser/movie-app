@@ -1,10 +1,10 @@
 import React from "react";
-import MovieCard from "./MovieCard";
 
 export interface Movie {
     id: number,
+    tmdb_id?: number,
     title : string,
-    posterUrl : string, 
+    posterPath : string, 
     rating : number,
     releaseDate : string
 }

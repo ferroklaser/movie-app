@@ -34,7 +34,7 @@ const MyList = () => {
                 const formattedData = data.map((movie : any) => ({
                     id: movie.id,
                     title: movie.title,
-                    posterUrl: movie.poster_url,
+                    posterPath: movie.poster_path,
                     rating: movie.rating,
                     releaseDate: new Date(movie.release_date).toLocaleDateString()
                 }));
@@ -53,7 +53,7 @@ const MyList = () => {
         <MovieCard key={movie.id}
             id={movie.id}
             title={movie.title}
-            posterUrl={movie.posterUrl}
+            posterPath={movie.posterPath}
             rating={movie.rating}
             releaseDate={movie.releaseDate}
         >

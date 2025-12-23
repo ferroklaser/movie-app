@@ -17,10 +17,10 @@ export const getUserMovie = async (req, res) => {
 // insert a movie into database
 export const insertUserMovie = async (req, res) => {
     try {
-        const { api_id, title, poster_url, rating, release_date } = req.body;
+        const { id, title, posterPath, rating, releaseDate } = req.body;
         const result = await pool.query(
-            'INSERT INTO movies (api_id, title, poster_url, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [api_id, title, poster_url, rating, release_date]
+            'INSERT INTO movies (tmdb_id, title, poster_path, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [id, title, posterPath, rating, releaseDate]
         );
         res.status(200).json(result.rows[0]);
     } catch (err) {
