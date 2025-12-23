@@ -1,2 +1,3 @@
-export const blue = '#51A3F0'
+export const blue = '#4682B4'
 export const white = '#F9F4F4'
+export const grey = '#26282A'

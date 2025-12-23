@@ -7,10 +7,22 @@ const NavBar = () => {
         to : "/now-playing"
     }
 
+    const myList : NavBarItemProps = {
+        label: "My List",
+        to: "/my-list"
+    }
+
+    const upcoming : NavBarItemProps = {
+        label: "Upcoming",
+        to: "/upcoming"
+    }
+
     return (
-        <div className="flex w-full h-[4rem] items-center justify-end m-0" style={{ backgroundColor: blue }}>
-            <div>
+        <div className="flex w-full justify-end h-[4rem] m-0" style={{ backgroundColor: blue }}>
+            <div className="h-full flex items-center">
                 <NavBarItem {...nowPlaying}/>
+                <NavBarItem {...upcoming} />
+                <NavBarItem {...myList}/>
             </div>
         </div>
     )

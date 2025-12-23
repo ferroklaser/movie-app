@@ -1,18 +1,17 @@
 'use client'
-import MovieCard from "@/src/components/MovieCard";
+import MovieCard from "@/src/components/MovieCard"
 import MovieList, { Movie } from "@/src/components/MovieList"
-import MyButton from "@/src/components/MyButton";
-import { formatDateToIso } from "@/src/utilities/formatDateToIso";
-import { useState, useEffect } from "react";
+import MyButton from "@/src/components/MyButton"
+import { useEffect, useState } from "react"
+import { formatDateToIso } from "@/src/utilities/formatDateToIso"
 
-
-const NowPlaying = () => {
+const Upcoming = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:3000/movies/now-playing", {
+                const response = await fetch("http://localhost:3000/movies/upcoming", {
                     method: "GET",
                     headers: {
                         "Content-Type" : "application/json"
@@ -38,24 +37,24 @@ const NowPlaying = () => {
     }, []);
 
     const handleAdd = async (movie : Movie) => {
-        const formattedMovie = {
-            ...movie,
-            releaseDate : formatDateToIso(movie.releaseDate)
+            const formattedMovie = {
+                ...movie,
+                releaseDate : formatDateToIso(movie.releaseDate)
+            }
+            const response = await fetch("http://localhost:3000/movies", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(formattedMovie)
+            });
+            const data = await response.json();
+            if (response.status == 409) {
+                alert(data.error);
+            }
         }
-        const response = await fetch("http://localhost:3000/movies", {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(formattedMovie)
-        });
-        const data = await response.json();
-        if (response.status == 409) {
-            alert(data.error);
-        }
-    }
 
-    const movieCards = movies.map(movie =>
+    const movieCards = movies.map(movie => 
         <MovieCard key={movie.id}
             id={movie.id}
             tmdb_id={movie.id}
@@ -64,7 +63,7 @@ const NowPlaying = () => {
             rating={movie.rating}
             releaseDate={movie.releaseDate}
         >
-            <MyButton label="View"/>
+            <MyButton label="View" />
             <MyButton label="Add" onClick={() => handleAdd(movie)}/>
         </MovieCard>
     )
@@ -76,4 +75,4 @@ const NowPlaying = () => {
     )
 }
 
-export default NowPlaying;
+export default Upcoming;
