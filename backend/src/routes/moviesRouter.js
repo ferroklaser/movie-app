@@ -1,20 +1,31 @@
 import express from 'express';
-import { getUserMovie, insertUserMovie, deleteUserMovie, getNowPlayingMovies, getUpcomingMovies } from '../controllers/moviesController.js';
+import { getUserMovies, 
+    insertUserMovie, 
+    deleteUserMovie, 
+    getNowPlayingMovies, 
+    getUpcomingMovies, 
+    getMovieDetails } from '../controllers/moviesController.js';
 
+
+// express reads routes from top to bottom, specific first before generic.
 const router = express.Router();
 
 //Get all movies
-router.get('/', getUserMovie);
+router.get('/', getUserMovies);
 
 //Insert movie
 router.post('/', insertUserMovie);
 
+//Get now-playing movies
+router.get('/now-playing', getNowPlayingMovies);
+
+//Get upcoming movies
+router.get('/upcoming', getUpcomingMovies);
+
+router.get('/:id', getMovieDetails);
+
 //Delete a movie
 //: is to represent a variable
 router.delete('/:id', deleteUserMovie);
-
-router.get('/now-playing', getNowPlayingMovies);
-
-router.get('/upcoming', getUpcomingMovies);
 
 export default router;
