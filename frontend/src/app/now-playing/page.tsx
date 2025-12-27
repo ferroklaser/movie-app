@@ -1,79 +1,38 @@
-'use client'
-import MovieCard from "@/src/components/MovieCard";
-import MovieList, { Movie } from "@/src/components/MovieList"
-import MyButton from "@/src/components/MyButton";
-import { formatDateToIso } from "@/src/utilities/formatDateToIso";
-import { useState, useEffect } from "react";
+import { Movie } from "@/src/components/MovieList"
+import NowPlaying from "./NowPlaying";
 
+const NowPlayingPage = async ({ searchParams } : {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) => {
+    const { page } = await searchParams;
+    let initialMovies : Movie[] = [];
+    let totalPages : number = 0;
+    const currentPage = Number(page) || 1;
 
-const NowPlaying = () => {
-    const [movies, setMovies] = useState<Movie[]>([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://localhost:3000/movies/now-playing", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type" : "application/json"
-                    }
-                });
-                const data = await response.json();
-                const formattedData = data.results.map((movie : any) => ({
-                    id: movie.id,
-                    title: movie.title,
-                    posterPath: movie.poster_path,
-                    rating: movie.vote_average, 
-                    releaseDate: new Date(movie.release_date).toLocaleDateString()
-                }));
-
-                setMovies(formattedData);
-            } catch (err : any) {
-                console.log(err.message);
-            }
-        }
-
-        fetchData();
-        return () => {}
-    }, []);
-
-    const handleAdd = async (movie : Movie) => {
-        const formattedMovie = {
-            ...movie,
-            releaseDate : formatDateToIso(movie.releaseDate)
-        }
-        const response = await fetch("http://localhost:3000/movies", {
-            method: "POST",
+    try {
+        const response = await fetch(`http://localhost:3000/movies/now-playing?page=${currentPage}`, {
+            method: "GET",
             headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(formattedMovie)
+                "Content-Type": "application/json"
+            }
         });
         const data = await response.json();
-        if (response.status == 409) {
-            alert(data.error);
-        }
+        const formattedData = data.results.map((movie: any) => ({
+            id: movie.id,
+            title: movie.title,
+            posterPath: movie.poster_path,
+            rating: movie.vote_average,
+            releaseDate: new Date(movie.release_date).toLocaleDateString()
+        }));
+        totalPages = data.total_pages;
+        initialMovies = formattedData;
+    } catch (err: any) {
+        console.log(err.message);
     }
 
-    const movieCards = movies.map(movie =>
-        <MovieCard key={movie.id}
-            id={movie.id}
-            tmdb_id={movie.id}
-            title={movie.title}
-            posterPath={movie.posterPath}
-            rating={movie.rating}
-            releaseDate={movie.releaseDate}
-        >
-            <MyButton label="View"/>
-            <MyButton label="Add" onClick={() => handleAdd(movie)}/>
-        </MovieCard>
-    )
-
     return (
-        <MovieList>
-            {movieCards}
-        </MovieList>
+        <NowPlaying initialMovies={initialMovies} totalPages={totalPages}/>
     )
 }
 
-export default NowPlaying;
+export default NowPlayingPage;

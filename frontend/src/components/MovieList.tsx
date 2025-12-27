@@ -15,7 +15,7 @@ export interface MovieListProps {
 
 const MovieList = ({children } : MovieListProps) => {
     return (
-        <div className="grid grid-cols-5 gap-5 m-5">
+        <div className="grid grid-cols-3 lg:grid-cols-5 gap-5 m-5">
             {children}
         </div>
     )
