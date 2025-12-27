@@ -22,7 +22,7 @@ const NowPlayingPage = async ({ searchParams } : {
             title: movie.title,
             posterPath: movie.poster_path,
             rating: movie.vote_average,
-            releaseDate: new Date(movie.release_date).toLocaleDateString()
+            releaseDate: new Date(movie.release_date).toLocaleDateString('en-GB')
         }));
         totalPages = data.total_pages;
         initialMovies = formattedData;

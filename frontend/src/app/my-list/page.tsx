@@ -16,7 +16,7 @@ const MyListPage = async () => {
             title: movie.title,
             posterPath: movie.poster_path,
             rating: movie.rating,
-            releaseDate: new Date(movie.release_date).toLocaleDateString()
+            releaseDate: new Date(movie.release_date).toLocaleDateString('en-GB')
         }));
         initialMovies = formattedData;
     } catch (err: any) {
