@@ -49,7 +49,7 @@ export const deleteUserMovie = async (req, res) => {
 // result.ok only for fetching from an api
 export const getNowPlayingMovies = async (req, res) => {
     try {
-        const pageNumber = req.query.page || 1
+        const pageNumber = req.query.page || 1;
         const result = await fetch(TMDB_BASE_URL + `now_playing?language=en-US&page=${pageNumber}&api_key=${TMDB_API_KEY}`);
         if (!result.ok) {
             throw new Error(`Response status: ${result.status}`);
@@ -64,7 +64,8 @@ export const getNowPlayingMovies = async (req, res) => {
 
 export const getUpcomingMovies = async (req, res) => {
     try {
-        const result = await fetch(TMDB_BASE_URL + `upcoming?language=en-US&page=1&api_key=${TMDB_API_KEY}`);
+        const pageNumber = req.query.page || 1;
+        const result = await fetch(TMDB_BASE_URL + `upcoming?language=en-US&page=${pageNumber}&api_key=${TMDB_API_KEY}`);
         if (!result.ok) {
             throw new Error(`Response status: ${result.status}`);
         }
