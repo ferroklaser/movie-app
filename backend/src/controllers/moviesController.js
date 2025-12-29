@@ -3,11 +3,22 @@ import { pool } from "../db.js"
 const TMDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
-// get all movies from database
+// get movies from local database for a specific page
 export const getUserMovies = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM movies');
-        res.status(200).json(result.rows);
+        const limit = 20;
+        const currentPage = Number(req.query.page) || 1;
+        const offset = limit * (currentPage - 1)
+        const [dataQuery, countQuery] = await Promise.all([
+            await pool.query('SELECT * FROM movies LIMIT $1 OFFSET $2', [limit, offset]),
+            await pool.query('SELECT COUNT(*) FROM movies')
+        ]);
+        const totalNumberOfRows = parseInt(countQuery.rows[0].count);
+        const numberOfPages = Math.ceil(totalNumberOfRows / limit)
+        res.status(200).json({
+            results: dataQuery.rows,
+            total_pages: numberOfPages
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error getting all user movies');
