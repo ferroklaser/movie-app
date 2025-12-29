@@ -1,11 +1,12 @@
 'use client'
 import MovieList, { Movie } from "@/src/components/MovieList";
-import { useState } from "react";
 import MovieCard from "@/src/components/MovieCard";
 import MyButton from "@/src/components/MyButton";
+import Pagination from "@/src/components/Pagination";
+import { useRouter } from "next/navigation";
 
-const MyList = ({ initialMovies } : { initialMovies : Movie[] }) => {
-    const [movies, setMovies] = useState<Movie[]>(initialMovies);
+const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
+    const router = useRouter();
 
     const handleDelete = async (id : number) => {
         const response = await fetch(`http://localhost:3000/movies/${id}`, {
@@ -14,10 +15,12 @@ const MyList = ({ initialMovies } : { initialMovies : Movie[] }) => {
                 'Content-Type' : 'application/json'
             }
         });
-        setMovies(movies.filter(movie => movie.id !== id));
+        if (response.ok) {
+            router.refresh();
+        }
     }
 
-    const movieCards = movies.map(movie =>
+    const movieCards = initialMovies.map(movie =>
         <MovieCard key={movie.id}
             id={movie.id}
             title={movie.title}
@@ -30,9 +33,16 @@ const MyList = ({ initialMovies } : { initialMovies : Movie[] }) => {
         </MovieCard>)
 
     return (
-        <MovieList>
-            {movieCards}
-        </MovieList>
+        <>
+            <MovieList>
+                {movieCards}
+            </MovieList>
+            <div className="flex justify-end pr-5 pb-4">
+                <div>
+                    <Pagination totalPages={totalPages}/>
+                </div>
+            </div>
+        </>
     )
 }
 
