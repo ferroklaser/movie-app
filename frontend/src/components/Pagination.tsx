@@ -7,9 +7,10 @@ const Pagination = ({ totalPages } : { totalPages : number }) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get('page')) || 1;
+    const prevPage = currentPage - 1;
+    const nextPage = currentPage + 1;
 
     const handleNext = () => {
-        const nextPage = currentPage + 1;
         if (nextPage > totalPages) {
             alert(`Page ${nextPage} does not exists`);
             return;
@@ -20,7 +21,6 @@ const Pagination = ({ totalPages } : { totalPages : number }) => {
     }
 
     const handlePrev = () => {
-        const prevPage = currentPage - 1;
         if (prevPage <= 0) {
             alert(`Page ${prevPage} does not exists`);
             return;
@@ -32,9 +32,9 @@ const Pagination = ({ totalPages } : { totalPages : number }) => {
 
     return (
         <div className="flex gap-2 text-2xl items-center">
-            <FaArrowCircleLeft onClick={handlePrev} style={{ color: white }}/>
+            <FaArrowCircleLeft onClick={handlePrev} style={{ color: white, opacity: prevPage > 0 ? 1 : 0.3 }}/>
             <span className="text-white text-lg">Page {currentPage} of {totalPages}</span>
-            <FaArrowCircleRight onClick={handleNext} style={{ color: white}}/>
+            <FaArrowCircleRight onClick={handleNext} style={{ color: white, opacity: nextPage <= totalPages ? 1 : 0.3 }}/>
         </div>
     )
 };
