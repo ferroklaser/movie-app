@@ -2,17 +2,24 @@ import { pool } from "../db.js"
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const VALID_SORT_FIELDS = ['created_at', 'release_date', 'rating'];
+const VALID_SORT_ORDER = ['ASC', 'DESC'];
 
 // get movies from local database for a specific page
 export const getUserMovies = async (req, res) => {
     try {
         const limit = 20;
         const currentPage = Number(req.query.page) || 1;
-        const offset = limit * (currentPage - 1)
+        const offset = limit * (currentPage - 1);
+        
+        const sortField = req.query.sort;
+        const sortOrder = req.query.order;
+
         const [dataQuery, countQuery] = await Promise.all([
-            await pool.query('SELECT * FROM movies LIMIT $1 OFFSET $2', [limit, offset]),
+            await pool.query(`SELECT * FROM movies ORDER BY ${sortField} ${sortOrder} LIMIT $1 OFFSET $2`, [limit, offset]),
             await pool.query('SELECT COUNT(*) FROM movies')
         ]);
+
         const totalNumberOfRows = parseInt(countQuery.rows[0].count);
         const numberOfPages = Math.ceil(totalNumberOfRows / limit)
         res.status(200).json({
