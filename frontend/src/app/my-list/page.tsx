@@ -4,13 +4,15 @@ import MyList from "./MyList";
 const MyListPage = async ({ searchParams } : {
      searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
-    const { page } = await searchParams;
+    const { page, sort, order } = await searchParams;
     let initialMovies : Movie[] = [];
     let totalPages : number = 0;
     const currentPage = Number(page) || 1;
+    const currentSort = sort || 'created_at';
+    const currentOrder = order || 'ASC';
 
     try {
-        const response = await fetch(`http://localhost:3000/movies?page=${currentPage}`, {
+        const response = await fetch(`http://localhost:3000/movies?page=${currentPage}&sort=${currentSort}&order=${currentOrder}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application.json"
