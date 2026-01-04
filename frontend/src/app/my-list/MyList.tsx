@@ -6,15 +6,14 @@ import Pagination from "@/src/components/Pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import DropDown from "@/src/components/DropDown";
 import { white } from "@/src/resources/colors";
-import { useEffect, useState } from "react";
+import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
 const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [selectedSort, setSelectedSort] = useState<string>(searchParams.get('sort') || 'created_at');
-
-    console.log('hi');
+    const selectedSort = searchParams.get('sort') || 'created_at';
+    const selectedOrder = searchParams.get('order') || 'ASC';
 
     const handleDelete = async (id : number) => {
         const response = await fetch(`http://localhost:3000/movies/${id}`, {
@@ -28,11 +27,18 @@ const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], total
         }
     }
 
-    useEffect(() => {
+    const handleSortOrder = () => {
+        const params = new URLSearchParams(searchParams);
+        const newOrder = selectedOrder === 'DESC' ? 'ASC' : 'DESC'
+        params.set('order', newOrder);
+        router.push(`${pathname}?${params.toString()}`);
+    }
+
+    const handleSortField = (selectedSort : string) => {
         const params = new URLSearchParams(searchParams);
         params.set('sort', selectedSort);
         router.push(`${pathname}?${params.toString()}`);
-    }, [selectedSort])
+    }
 
     const movieCards = initialMovies.map(movie =>
         <MovieCard key={movie.id}
@@ -61,18 +67,19 @@ const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], total
     return (
         <>
             <div className="w-full flex justify-end h-[5vh] mt-3">
-                <DropDown
-                    value={selectedSort}
-                    onChange={e => setSelectedSort(e.currentTarget.value)}
-                    options={options}
-                    style={{
-                        backgroundColor: white,
-                        fontSize: '1rem',
-                        marginRight: '1rem',
-                        borderRadius: '2rem',
-                        padding: '0.5rem'
-                    }}
-                />
+                <div className="flex mr-3 gap-2" style={{ backgroundColor: white, borderRadius: '2rem', padding: '0.5rem'}}>
+                    <DropDown
+                        value={selectedSort}
+                        onChange={e => handleSortField(e.currentTarget.value)}
+                        options={options}
+                        style={{
+                            fontSize: '1rem',
+                        }}
+                    />
+                    <button className="text-4xl flex items-center" onClick={handleSortOrder}>
+                        {selectedOrder == 'ASC' ? <IoMdArrowDropup/> :  <IoMdArrowDropdown/>}
+                    </button>
+                </div>
             </div>
             <MovieList>
                 {movieCards}
