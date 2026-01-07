@@ -22,6 +22,7 @@ router.get('/now-playing', getNowPlayingMovies);
 //Get upcoming movies
 router.get('/upcoming', getUpcomingMovies);
 
+//Get movie details
 router.get('/:id', getMovieDetails);
 
 //Delete a movie

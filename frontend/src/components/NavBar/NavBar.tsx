@@ -1,5 +1,6 @@
 import { blue } from "@/src/resources/colors";
 import NavBarItem, { NavBarItemProps } from "./NavBarItem";
+import Search from "../Search";
 
 const NavBar = () => {
     const nowPlaying : NavBarItemProps = {
@@ -18,7 +19,11 @@ const NavBar = () => {
     }
 
     return (
-        <div className="flex w-full justify-end h-[4rem] m-0" style={{ backgroundColor: blue }}>
+        <div className="flex w-full justify-between h-[4rem] m-0" style={{ backgroundColor: blue }}>
+            <div className="w-[25.5rem]"></div>
+            <div className="flex items-center">
+                <Search placeholder="Search"/>
+            </div>
             <div className="h-full flex items-center">
                 <NavBarItem {...nowPlaying}/>
                 <NavBarItem {...upcoming} />
