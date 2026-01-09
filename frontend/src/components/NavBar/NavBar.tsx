@@ -15,11 +15,7 @@ const NavBar = () => {
     }
 
     return (
-        <div className="flex w-full justify-between h-[4rem] m-0" style={{ backgroundColor: blue }}>
-            <div className="w-[14rem]"></div>
-            <div className="flex items-center">
-                <Search placeholder="Search"/>
-            </div>
+        <div className="flex w-full justify-end h-[4rem] m-0" style={{ backgroundColor: blue }}>
             <div className="h-full flex items-center">
                 <NavBarItem {...browse}/>
                 <NavBarItem {...myList}/>

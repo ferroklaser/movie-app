@@ -1,5 +1,5 @@
 import NavBarItem, { NavBarItemProps } from "./NavBarItem"
-import { white } from "@/src/resources/colors"
+import Search from "../Search";
 
 const nowPlaying: NavBarItemProps = {
     label: "Now Playing",
@@ -13,7 +13,7 @@ const upcoming : NavBarItemProps = {
 
 const browseBarStyle = { 
     border: '2px solid white', 
-    padding: '0.5rem', 
+    padding: '0.25rem', 
     margin: '0.5rem', 
     borderRadius: 50,
     width: '9rem',
@@ -27,6 +27,9 @@ const BrowseNavBar = () => {
             <div className="h-full flex items-center">
                 <NavBarItem {...nowPlaying} style={ browseBarStyle }/>
                 <NavBarItem {...upcoming} style={ browseBarStyle }/>
+            </div>
+            <div className="h-full flex items-center">
+                <Search placeholder="Find by name" className="lg:w-md w-2xs mx-3"/>
             </div>
         </div>
     )
