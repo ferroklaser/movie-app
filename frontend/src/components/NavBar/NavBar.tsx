@@ -5,7 +5,8 @@ import Search from "../Search";
 const NavBar = () => {
     const browse : NavBarItemProps = {
         label : "Browse",
-        to : "/browse/now-playing"
+        to : "/browse/now-playing",
+        basePath: "/browse"
     }
 
     const myList : NavBarItemProps = {
