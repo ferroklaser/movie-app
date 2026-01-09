@@ -3,9 +3,9 @@ import NavBarItem, { NavBarItemProps } from "./NavBarItem";
 import Search from "../Search";
 
 const NavBar = () => {
-    const nowPlaying : NavBarItemProps = {
-        label : "Now Playing",
-        to : "/now-playing"
+    const browse : NavBarItemProps = {
+        label : "Browse",
+        to : "/browse/now-playing"
     }
 
     const myList : NavBarItemProps = {
@@ -13,20 +13,14 @@ const NavBar = () => {
         to: "/my-list"
     }
 
-    const upcoming : NavBarItemProps = {
-        label: "Upcoming",
-        to: "/upcoming"
-    }
-
     return (
         <div className="flex w-full justify-between h-[4rem] m-0" style={{ backgroundColor: blue }}>
-            <div className="w-[25.5rem]"></div>
+            <div className="w-[14rem]"></div>
             <div className="flex items-center">
                 <Search placeholder="Search"/>
             </div>
             <div className="h-full flex items-center">
-                <NavBarItem {...nowPlaying}/>
-                <NavBarItem {...upcoming} />
+                <NavBarItem {...browse}/>
                 <NavBarItem {...myList}/>
             </div>
         </div>

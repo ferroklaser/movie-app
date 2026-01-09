@@ -15,7 +15,7 @@ const NavBarItem = ({ label, to } : NavBarItemProps) => {
     }
 
     return (
-        <div className="cursor-pointer text-xl p-6 font-normal"
+        <div className="cursor-pointer text-xl p-6 font-semibold"
             style={{ color: white }}
             onClick={handleClick}>
             {label}
