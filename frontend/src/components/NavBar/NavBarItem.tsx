@@ -8,9 +8,10 @@ export interface NavBarItemProps {
     to: string,
     style?: CSSProperties;
     basePath?: string
+    className? : string
 }
 
-const NavBarItem = ({ label, to, style, basePath } : NavBarItemProps) => {
+const NavBarItem = ({ label, to, style, basePath, className } : NavBarItemProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const isSelected = basePath ? pathname.startsWith(basePath) : pathname === to;
@@ -20,7 +21,7 @@ const NavBarItem = ({ label, to, style, basePath } : NavBarItemProps) => {
     }
 
     return (
-        <div className="cursor-pointer text-xl px-6 py-5 font-semibold max-h-full"
+        <div className={`cursor-pointer text-xl px-6 py-5 font-semibold max-h-full ${className}`}
             style={{ color: isSelected ? grey : white, backgroundColor: isSelected ? white : "transparent", ...style }}
             onClick={handleClick}>
             {label}

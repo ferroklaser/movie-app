@@ -6,6 +6,7 @@ import { formatDateToIso } from "@/src/utilities/formatDateToIso";
 import MovieCard from "@/src/components/MovieCard";
 import MyButton from "@/src/components/MyButton";
 import Pagination from "@/src/components/Pagination";
+import { blue, white } from "@/src/resources/colors";
 
 const NowPlaying = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number}) => {
     const pathname = usePathname();
@@ -49,9 +50,9 @@ const NowPlaying = ({ initialMovies, totalPages } : { initialMovies : Movie[], t
             posterPath={movie.posterPath}
             rating={movie.rating}
             releaseDate={movie.releaseDate}
+            posterOnClick={() => handleView(movie)}
         >
-            <MyButton label="View" onClick={() => handleView(movie)} />
-            <MyButton label="Add" onClick={() => handleAdd(movie)} />
+            <MyButton label="Add" onClick={() => handleAdd(movie)} style={{ width: '100%' }}/>
         </MovieCard>
     )
 
