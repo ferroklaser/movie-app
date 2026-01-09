@@ -95,6 +95,21 @@ export const getUpcomingMovies = async (req, res) => {
     }
 }
 
+export const getPopularMovies = async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1;
+        const result = await fetch(TMDB_BASE_URL + `popular?language=en-US&page=${pageNumber}&api_key=${TMDB_API_KEY}`);
+        if (!result.ok) {
+            throw new Error(`Response status: ${result.status}`);
+        }
+        const data = await result.json();
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error getting popular movies from TMDB.');
+    }
+}
+
 export const getMovieDetails = async (req, res) => {
     const { id } = req.params;
 

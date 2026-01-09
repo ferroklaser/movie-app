@@ -4,7 +4,9 @@ import { getUserMovies,
     deleteUserMovie, 
     getNowPlayingMovies, 
     getUpcomingMovies, 
-    getMovieDetails } from '../controllers/moviesController.js';
+    getMovieDetails,
+    getPopularMovies
+} from '../controllers/moviesController.js';
 
 
 // express reads routes from top to bottom, specific first before generic.
@@ -21,6 +23,9 @@ router.get('/now-playing', getNowPlayingMovies);
 
 //Get upcoming movies
 router.get('/upcoming', getUpcomingMovies);
+
+//Get popular movies
+router.get('/popular', getPopularMovies);
 
 //Get movie details
 router.get('/:id', getMovieDetails);
