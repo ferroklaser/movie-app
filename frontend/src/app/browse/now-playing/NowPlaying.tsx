@@ -55,7 +55,6 @@ const NowPlaying = ({ initialMovies, totalPages } : { initialMovies : Movie[], t
         </MovieCard>
     )
 
-
     return (
         <>
             <MovieList>

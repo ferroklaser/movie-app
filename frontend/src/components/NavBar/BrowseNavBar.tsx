@@ -11,6 +11,11 @@ const upcoming : NavBarItemProps = {
     to: "/browse/upcoming"
 } 
 
+const popular : NavBarItemProps= {
+    label: "Popular",
+    to: "/browse/popular"
+}
+
 const browseBarStyle = { 
     border: '2px solid white', 
     padding: '0.25rem', 
@@ -26,6 +31,7 @@ const BrowseNavBar = () => {
         <div className="flex w-full justify-between h-[4rem] m-0">
             <div className="h-full flex items-center">
                 <NavBarItem {...nowPlaying} style={ browseBarStyle }/>
+                <NavBarItem {...popular} style={ browseBarStyle }/>
                 <NavBarItem {...upcoming} style={ browseBarStyle }/>
             </div>
             <div className="h-full flex items-center">
