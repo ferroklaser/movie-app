@@ -32,9 +32,9 @@ const Pagination = ({ totalPages } : { totalPages : number }) => {
 
     return (
         <div className="flex gap-2 text-2xl items-center">
-            <FaArrowCircleLeft onClick={handlePrev} style={{ color: white, opacity: prevPage > 0 ? 1 : 0.3 }}/>
+            <FaArrowCircleLeft onClick={handlePrev} style={{ color: white, opacity: prevPage > 0 ? 1 : 0.3 }} className="cursor-pointer"/>
             <span className="text-white text-lg">Page {currentPage} of {totalPages}</span>
-            <FaArrowCircleRight onClick={handleNext} style={{ color: white, opacity: nextPage <= totalPages ? 1 : 0.3 }}/>
+            <FaArrowCircleRight onClick={handleNext} style={{ color: white, opacity: nextPage <= totalPages ? 1 : 0.3 }} className="cursor-pointer"/>
         </div>
     )
 };

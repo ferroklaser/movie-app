@@ -39,7 +39,7 @@ const NowPlaying = ({ initialMovies, totalPages } : { initialMovies : Movie[], t
         }
         const params = new URLSearchParams(searchParams);
         params.set('view', tmdb_id.toString());
-        router.push(`${pathname}?${params.toString()}`);
+        router.push(`${pathname}?${params.toString()}`, { scroll : false });
     }
 
     const movieCards = initialMovies.map(movie =>

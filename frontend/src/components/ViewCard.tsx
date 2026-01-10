@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect } from "react";
 import { getPosterUrl } from "../utilities/getPosterUrl";
+import { IoIosCloseCircle } from "react-icons/io";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 interface MovieData {
     id: number,
@@ -14,6 +16,9 @@ interface MovieData {
 
 const ViewCard = ({ id } : { id : string  | null}) => {
     const [movieData, setMovieData] = useState<MovieData | null>(null);
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
     const getMovieDetails = async (id : string | null) => {
         if (id == null) {
@@ -54,30 +59,29 @@ const ViewCard = ({ id } : { id : string  | null}) => {
         return <div className="bg-red-500"></div>
     }
 
+    const handleViewCardClose = () => {
+        const params = new URLSearchParams(searchParams);
+        params.delete('view');
+        router.push(`${pathname}/${params.toString()}`);
+    }
+
     return (
-        <div className="bg-gray-300 w-[60vw] min-w-xs max-w-3xl h-auto p-2 rounded-lg fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-            <div className="flex items-center w-full">
-                <div className="flex w-full">
+        <div className="bg-gray-300 min-w-[40vw] max-w-xs lg:w-[60vw] lg:max-w-3xl max-h-[65vh] p-1 rounded-lg fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+            <div className="flex flex-col lg:flex-row w-full relative">
+                <div className="flex h-full max-w-[37vw] xl:max-w-none xl:w-full">
                     <img src={getPosterUrl(movieData.posterPath, '/w500')} alt="new"/>
                 </div>
-                <div className="text-xl w-full p-5">
-                    <div>Title: {movieData.title}</div>
-                    <div>Rating: {movieData.rating}</div>
-                    <div>Release Date: {movieData.releaseDate}</div>
-                    <div>Runtime: {movieData.runtime}</div>
-                    <div>Overview: {movieData.overview}</div>
-                </div>
-            </div>
-            <div className="flex items-center w-full md:hidden">
-                <div className="flex w-full">
-                    <img src={getPosterUrl(movieData.posterPath, '/w500')} alt="new"/>
-                </div>
-                <div className="text-xl w-full p-5">
-                    <div>Title: {movieData.title}</div>
-                    <div>Rating: {movieData.rating}</div>
-                    <div>Release Date: {movieData.releaseDate}</div>
-                    <div>Runtime: {movieData.runtime}</div>
-                    <div>Overview: {movieData.overview}</div>
+                <div className=" w-[40vw] text-xs md:text-md lg:text-lg  xl:w-full xl:h-full overflow-hidden">
+                    <IoIosCloseCircle onClick={handleViewCardClose} className="cursor-pointer absolute top-0.5 right-0.5 text-4xl"/>
+                    <div className="p-5 overflow-hidden">
+                        <div className="overflow-y-auto h-[30vh] lg:h-[50vh]">
+                            <div>Title: {movieData.title}</div>
+                            <div>Rating: {movieData.rating}</div>
+                            <div>Release Date: {movieData.releaseDate}</div>
+                            <div>Runtime: {movieData.runtime}</div>
+                            <div>Overview: {movieData.overview}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
