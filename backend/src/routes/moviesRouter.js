@@ -5,7 +5,8 @@ import { getUserMovies,
     getNowPlayingMovies, 
     getUpcomingMovies, 
     getMovieDetails,
-    getPopularMovies
+    getPopularMovies,
+    searchMovie
 } from '../controllers/moviesController.js';
 
 
@@ -17,6 +18,9 @@ router.get('/', getUserMovies);
 
 //Insert movie
 router.post('/', insertUserMovie);
+
+//Search movie
+router.get('/search', searchMovie);
 
 //Get now-playing movies
 router.get('/now-playing', getNowPlayingMovies);

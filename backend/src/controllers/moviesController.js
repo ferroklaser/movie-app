@@ -2,8 +2,6 @@ import { pool } from "../db.js"
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
-const VALID_SORT_FIELDS = ['created_at', 'release_date', 'rating'];
-const VALID_SORT_ORDER = ['ASC', 'DESC'];
 
 // get movies from local database for a specific page
 export const getUserMovies = async (req, res) => {
@@ -123,5 +121,22 @@ export const getMovieDetails = async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Error getting movie details');
+    }
+}
+
+export const searchMovie = async (req, res) => {
+    const { query, page } = req.query;
+
+    try {
+        const pageNumber = page || 1;
+        const result = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&page=${pageNumber}&language=en-US&api_key=${TMDB_API_KEY}`);
+        if (!result.ok) {
+            throw new Error(`Response status: ${result.status}`);
+        }
+        const data = await result.json();
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Error getting popular movies from TMDB.');
     }
 }
