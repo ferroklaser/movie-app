@@ -1,5 +1,8 @@
+'use client'
+
 import { CSSProperties } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface SearchProps {
     placeholder : string,
@@ -8,6 +11,12 @@ interface SearchProps {
 }
 
 const Search = ({ placeholder, style, className } : SearchProps) => {
+    const router = useRouter();
+
+    const handleSearch = () => {
+        router.push(`/search?`)
+    }
+
     return (
         <div className={`flex bg-white w-full h-[5vh] items-center p-4 rounded-full ${className}`}>
             <label htmlFor="search" className="sr-only">Search</label>

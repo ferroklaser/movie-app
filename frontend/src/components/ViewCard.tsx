@@ -62,7 +62,7 @@ const ViewCard = ({ id } : { id : string  | null}) => {
     const handleViewCardClose = () => {
         const params = new URLSearchParams(searchParams);
         params.delete('view');
-        router.push(`${pathname}/${params.toString()}`);
+        router.push(`${pathname}?${params.toString()}`, {scroll : false});
     }
 
     return (
