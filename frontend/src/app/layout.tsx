@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar/NavBar";
 import { grey } from "../resources/colors";
 import ViewCardListener from "../components/ViewCardListener";
 import WebSocketProvider from "../components/WebSocketProvider";
+import { RealTimeProvider } from "../context/RealTimeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`} 
-        style={{ backgroundColor : grey}}>
-        <NavBar />
-        <WebSocketProvider />
-        {children}
-        <ViewCardListener/>
+        style={{ backgroundColor: grey }}>
+        <RealTimeProvider>
+          <NavBar />
+          {children}
+          <ViewCardListener />
+        </RealTimeProvider>
       </body>
     </html>
   );
