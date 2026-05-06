@@ -1,44 +1,49 @@
 package websocket
 
-import "github.com/gorilla/websocket"
+import (
+	"log"
+
+	"github.com/gorilla/websocket"
+)
 
 type Client struct {
-	hub  *Hub
-	conn *websocket.Conn
-	send chan []byte
+	Hub  *Hub
+	Conn *websocket.Conn
+	Send chan []byte
 }
 
-func (client *Client) readPump() {
+func (client *Client) ReadPump() {
 	defer func() {
-		client.hub.unregister <- client
-		client.conn.Close()
+		client.Hub.UnRegister <- client
+		client.Conn.Close()
 	}()
 
 	for {
 		// server reads message from user
-		_, message, err := client.conn.ReadMessage()
+		_, message, err := client.Conn.ReadMessage()
 
 		if err != nil {
 			break
 		}
-		client.hub.broadcasts <- message
+		log.Printf("Server received: %s", message)
+		client.Hub.Broadcasts <- message
 	}
 }
 
-func (client *Client) writePump() {
+func (client *Client) WritePump() {
 	defer func() {
-		client.conn.Close()
+		client.Conn.Close()
 	}()
 
 	for {
-		message, ok := <-client.send
+		message, ok := <-client.Send
 
 		if !ok {
-			client.conn.WriteMessage(websocket.CloseMessage, []byte{})
+			client.Conn.WriteMessage(websocket.CloseMessage, []byte{})
 			return
 		}
 
-		err := client.conn.WriteMessage(websocket.TextMessage, message)
+		err := client.Conn.WriteMessage(websocket.TextMessage, message)
 
 		if err != nil {
 			return
