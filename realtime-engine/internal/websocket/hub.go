@@ -1,39 +1,43 @@
 package websocket
 
+import "log"
+
 type Hub struct {
-	clients    map[*Client]bool
-	broadcasts chan []byte
-	register   chan *Client
-	unregister chan *Client
+	Clients    map[*Client]bool
+	Broadcasts chan []byte
+	Register   chan *Client
+	UnRegister chan *Client
 }
 
 func NewHub() *Hub {
 	return &Hub{
-		clients:    make(map[*Client]bool),
-		broadcasts: make(chan []byte),
-		register:   make(chan *Client),
-		unregister: make(chan *Client),
+		Clients:    make(map[*Client]bool),
+		Broadcasts: make(chan []byte),
+		Register:   make(chan *Client),
+		UnRegister: make(chan *Client),
 	}
 }
 
-func (hub Hub) run() {
+func (hub Hub) Run() {
 	for {
 		select {
-		case client := <-hub.register:
-			hub.clients[client] = true
-		case client := <-hub.unregister:
-			if _, ok := hub.clients[client]; ok {
-				delete(hub.clients, client)
-				close(client.send)
+		case client := <-hub.Register:
+			hub.Clients[client] = true
+			log.Println("Client registered!")
+		case client := <-hub.UnRegister:
+			if _, ok := hub.Clients[client]; ok {
+				delete(hub.Clients, client)
+				close(client.Send)
 			}
-		case msg := <-hub.broadcasts:
-			for client := range hub.clients {
+		case msg := <-hub.Broadcasts:
+			log.Printf("Hub is broadcasting: %s", msg)
+			for client := range hub.Clients {
 				select {
-				case client.send <- msg:
+				case client.Send <- msg:
 					//Message successful
 				default:
-					close(client.send)
-					delete(hub.clients, client)
+					close(client.Send)
+					delete(hub.Clients, client)
 				}
 			}
 		}
