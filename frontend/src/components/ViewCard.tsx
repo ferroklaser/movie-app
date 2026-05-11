@@ -68,7 +68,7 @@ const ViewCard = ({ id } : { id : string  | null}) => {
     return (
         <div className="bg-gray-300 min-w-[40vw] max-w-xs lg:w-[60vw] lg:max-w-3xl max-h-[65vh] p-1 rounded-lg fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
             <div className="flex flex-col lg:flex-row w-full relative">
-                <div className="flex h-full max-w-[37vw] xl:max-w-none xl:w-full">
+                <div className="h-full">
                     <img src={getPosterUrl(movieData.posterPath, '/w500')} alt="new"/>
                 </div>
                 <div className=" w-[40vw] text-xs md:text-md lg:text-lg  xl:w-full xl:h-full overflow-hidden">
