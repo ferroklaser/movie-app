@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	ws "realtime/internal/websocket"
 
 	"github.com/gorilla/websocket"
+	"github.com/redis/go-redis/v9"
 )
 
 var upgrader = websocket.Upgrader{
@@ -44,6 +46,7 @@ func main() {
 	hub := ws.NewHub()
 
 	go hub.Run()
+	go listenToRedis(hub)
 
 	// define /ws route, when someone visits, run handler
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
@@ -54,5 +57,27 @@ func main() {
 	log.Println("Realtime engine starting on :8080...")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
+	}
+}
+
+func listenToRedis(hub *ws.Hub) {
+	ctx := context.Background()
+
+	rdb := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})
+
+	pubsub := rdb.Subscribe(ctx, "movieActivityUpdates")
+	defer pubsub.Close()
+
+	for {
+		msg, err := pubsub.ReceiveMessage(ctx)
+
+		if err != nil {
+			log.Printf("Redis error: %v", err)
+			continue
+		}
+
+		hub.Broadcasts <- []byte(msg.Payload)
 	}
 }

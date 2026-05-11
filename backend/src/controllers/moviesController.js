@@ -1,4 +1,5 @@
 import { pool } from "../db.js"
+import { notifyActivity } from "../utilities/notifyActivity.js";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
@@ -38,6 +39,7 @@ export const insertUserMovie = async (req, res) => {
             'INSERT INTO movies (tmdb_id, title, poster_path, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [id, title, posterPath, rating, releaseDate]
         );
+        await notifyActivity(title)
         res.status(201).json(result.rows[0]);
     } catch (err) {
         if (err.code === '23505') {
