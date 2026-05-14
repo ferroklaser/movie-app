@@ -3,11 +3,22 @@ import { useState } from "react"
 import MyButton from "../MyButton"
 import { useRouter } from "next/navigation"
 import TextInput from "../TextInput"
+import { signInWithEmail } from "@/src/app/(auth)/login/action"
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
+
+    const handleLogin = async () => {
+        await signInWithEmail(email, password)
+        resetFields()
+    }
+
+    const resetFields = () => {
+        setEmail('')
+        setPassword('')
+    }
 
     return (
         <div className="flex w-full min-h-screen justify-center items-center">
@@ -44,7 +55,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="flex">
-                    <MyButton label="Login" className="w-full"/>
+                    <MyButton label="Login" className="w-full" onClick={handleLogin}/>
                 </div>
                 <div className="flex justify-center">
                     <span>Don't have an account? <button onClick={() => router.push('/signup')}>Sign Up</button></span>
