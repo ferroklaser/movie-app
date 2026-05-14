@@ -3,10 +3,12 @@
 import { useState } from "react"
 import MyButton from "../MyButton"
 import TextInput from "../TextInput"
+import { useRouter } from "next/navigation"
 
 const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const router = useRouter()
 
     return (
         <div className="flex w-full min-h-screen justify-center items-center">
@@ -14,8 +16,8 @@ const SignUp = () => {
                 <div className="w-full flex justify-center items-center p-10">
                     <span className="font-semibold text-2xl">Sign Up</span>
                 </div>
-                <div className="flex flex-col justify-center gap-10">
-                    <div className="w-full flex justify-center items-center flex-col px-10 text-xl">
+                <div className="flex flex-col justify-center gap-10 text-xl">
+                    <div className="w-full flex justify-center items-center flex-col px-10">
                         <div className="flex w-full">
                             <span>Email:</span>
                         </div>
@@ -27,7 +29,7 @@ const SignUp = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             className="h-[3vh] w-full" />
                     </div>
-                    <div className="w-full flex justify-center items-center flex-col px-10 text-xl">
+                    <div className="w-full flex justify-center items-center flex-col px-10">
                         <div className="flex w-full">
                             <span>Password:</span>
                         </div>
@@ -42,6 +44,9 @@ const SignUp = () => {
                 </div>
                 <div className="flex">
                     <MyButton label="Sign Up" className="w-full"/>
+                </div>
+                <div className="flex justify-center">
+                    <span>Already have an account? <button onClick={() => router.push('/login')}>Login</button></span>
                 </div>
             </div>
         </div>
