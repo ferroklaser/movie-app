@@ -11,9 +11,18 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const router = useRouter()
 
-    const handleSignUp = async () =>{
-        await signUpNewUser(email, password)
+    const handleSignUp = async () => {
+        const { error } = await signUpNewUser(email, password)
         resetFields()
+
+        if (error) {
+            alert('Error logging in')
+            return
+        }
+
+        router.push('/')
+        router.refresh()
+        return
     }
 
     const resetFields = () => {

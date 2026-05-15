@@ -11,8 +11,17 @@ const Login = () => {
     const router = useRouter()
 
     const handleLogin = async () => {
-        await signInWithEmail(email, password)
+        const { error } = await signInWithEmail(email, password)
         resetFields()
+
+        if (error) {
+            alert('Error logging in')
+            return
+        }
+
+        router.push('/')
+        router.refresh()
+        return 
     }
 
     const resetFields = () => {

@@ -1,5 +1,6 @@
 import { Movie } from "@/src/components/MovieList"
 import NowPlaying from "./NowPlaying";
+import { cookies } from "next/headers";
 
 const NowPlayingPage = async ({ searchParams } : {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -8,12 +9,19 @@ const NowPlayingPage = async ({ searchParams } : {
     let initialMovies : Movie[] = [];
     let totalPages : number = 0;
     const currentPage = Number(page) || 1;
+    const cookieStore = await cookies()
+
+    const cookieName = `sb-${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID}-auth-token`
+    const authCookie = cookieStore.get(cookieName)
+
+    if (!authCookie) console.log('No auth cookie')
 
     try {
         const response = await fetch(`http://localhost:3000/movies/now-playing?page=${currentPage}`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'Cookie' : authCookie ? `${cookieName}=${authCookie.value}` : ''
             }
         });
         const data = await response.json();

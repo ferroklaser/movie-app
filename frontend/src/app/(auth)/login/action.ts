@@ -7,4 +7,6 @@ export async function signInWithEmail(email : string, password : string) {
         email: email,
         password: password,
     })
+
+    return { data, error }
 }

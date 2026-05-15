@@ -15,11 +15,6 @@ export const getUserMovies = async (req, res) => {
         const sortField = req.query.sort;
         const sortOrder = req.query.order;
 
-        // const [dataQuery, countQuery] = await Promise.all([
-        //     await pool.query(`SELECT * FROM movies ORDER BY ${sortField} ${sortOrder} LIMIT $1 OFFSET $2`, [limit, offset]),
-        //     await pool.query('SELECT COUNT(*) FROM movies')
-        // ]);
-
         const { data : movies, count, error } = await supabase
             .from('movies')
             .select('*', { count: 'exact' })
@@ -45,11 +40,7 @@ export const getUserMovies = async (req, res) => {
 export const insertUserMovie = async (req, res) => {
     try {
         const { id, title, posterPath, rating, releaseDate } = req.body;
-        // const result = await pool.query(
-        //     'INSERT INTO movies (tmdb_id, title, poster_path, rating, release_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        //     [id, title, posterPath, rating, releaseDate]
-        // );
-        console.log("hi")
+
         const newMovie = {
             tmdb_id: id,
             title: title,
@@ -85,8 +76,6 @@ export const insertUserMovie = async (req, res) => {
 export const deleteUserMovie = async (req, res) => {
     const { id } = req.params;
     try {
-        // const result = await pool.query('DELETE FROM movies WHERE id = $1', [id]);
-
         const result = await supabase
             .from("movies")
             .delete()
