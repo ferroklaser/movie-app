@@ -1,5 +1,5 @@
 import React from "react";
-import { Movie } from "./MovieList";
+import { Movie } from "../model/movies";
 import { getPosterUrl } from "../utilities/getPosterUrl";
 
 interface MovieCardProps extends Movie {

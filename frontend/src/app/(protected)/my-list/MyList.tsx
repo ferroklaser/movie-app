@@ -1,5 +1,6 @@
 'use client'
-import MovieList, { Movie } from "@/src/components/MovieList";
+import { Movie } from "@/src/model/movies";
+import MovieList from "@/src/components/MovieList";
 import MovieCard from "@/src/components/MovieCard";
 import MyButton from "@/src/components/MyButton";
 import Pagination from "@/src/components/Pagination";
@@ -7,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import DropDown from "@/src/components/DropDown";
 import { white } from "@/src/resources/colors";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
+import DeleteMovieButton from "@/src/components/MyList/DeleteMovieButton";
 
 const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
     const router = useRouter();
@@ -14,18 +16,6 @@ const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], total
     const searchParams = useSearchParams();
     const selectedSort = searchParams.get('sort') || 'created_at';
     const selectedOrder = searchParams.get('order') || 'ASC';
-
-    const handleDelete = async (id : number) => {
-        const response = await fetch(`http://localhost:3000/movies/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type' : 'application/json'
-            }
-        });
-        if (response.ok) {
-            router.refresh();
-        }
-    }
 
     const handleSortOrder = () => {
         const params = new URLSearchParams(searchParams);
@@ -49,7 +39,7 @@ const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], total
             releaseDate={movie.releaseDate}
         >
             <MyButton label="View" onClick={() => { }} />
-            <MyButton label="Remove" onClick={() => handleDelete(movie.id)} />
+            <DeleteMovieButton label="Remove" movie={movie} />
         </MovieCard>)
 
     const options = [{

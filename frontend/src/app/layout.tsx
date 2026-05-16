@@ -3,9 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/NavBar/NavBar";
 import { grey } from "../resources/colors";
-import ViewCardListener from "../components/ViewCardListener";
-import WebSocketProvider from "../components/WebSocketProvider";
-import { RealTimeProvider } from "../context/RealTimeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`} 
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`} 
         style={{ backgroundColor: grey }}>
-        <RealTimeProvider>
-          <NavBar />
           {children}
-          <ViewCardListener />
-        </RealTimeProvider>
       </body>
     </html>
   );

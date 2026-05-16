@@ -1,11 +1,14 @@
 'use client'
-import MovieList, { Movie } from "@/src/components/MovieList";
-import MovieCard from "@/src/components/MovieCard";
-import MyButton from "@/src/components/MyButton";
-import Pagination from "@/src/components/Pagination";
+import { Movie } from "@/src/model/movies"
+import MovieList from "@/src/components/MovieList"
+import { formatDateToIso } from "@/src/utilities/formatDateToIso"
+import MovieCard from "@/src/components/MovieCard"
+import MyButton from "@/src/components/MyButton"
+import Pagination from "@/src/components/Pagination"
+import AddMovieButton from "@/src/components/Browse/AddMovieButton"
 
-const Popular = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
-    
+const Upcoming = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
+
     const movieCards = initialMovies.map(movie =>
         <MovieCard key={movie.id}
             id={movie.id}
@@ -15,8 +18,8 @@ const Popular = ({ initialMovies, totalPages } : { initialMovies : Movie[], tota
             rating={movie.rating}
             releaseDate={movie.releaseDate}
         >
-            <MyButton label="View" onClick={() => {}}/>
-            <MyButton label="Add" onClick={() => {}}/>
+            <MyButton label="View" />
+            <AddMovieButton movie={movie} />
         </MovieCard>
     )
 
@@ -34,4 +37,4 @@ const Popular = ({ initialMovies, totalPages } : { initialMovies : Movie[], tota
     )
 }
 
-export default Popular;
+export default Upcoming;
