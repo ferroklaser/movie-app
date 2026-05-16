@@ -1,5 +1,6 @@
 import Popular from "./Popular"
 import { Movie } from "@/src/components/MovieList";
+import { serverFetch } from "@/src/utilities/api";
 
 
 const PopularPage = async ({ searchParams } : {
@@ -10,26 +11,22 @@ const PopularPage = async ({ searchParams } : {
     let totalPages : number = 0;
     const currentPage = Number(page) || 1;
 
-    try {
-        const response = await fetch(`http://localhost:3000/movies/popular?page=${currentPage}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const data = await response.json();
-                const formattedData = data.results.map((movie: any) => ({
-            id: movie.id,
-            title: movie.title,
-            posterPath: movie.poster_path,
-            rating: movie.vote_average,
-            releaseDate: new Date(movie.release_date).toLocaleDateString('en-GB')
-        }));
-        totalPages = data.total_pages;
-        initialMovies = formattedData;
-    } catch (err:any) {
-        console.log(err.message);
-    }
+    const { data, response } = await serverFetch(`/movies/popular?page=${currentPage}`, {
+        method: "GET"
+    })
+
+    if (!response?.ok) alert("Failed fetch")
+
+
+    const formattedData = data.results.map((movie: any) => ({
+        id: movie.id,
+        title: movie.title,
+        posterPath: movie.poster_path,
+        rating: movie.vote_average,
+        releaseDate: new Date(movie.release_date).toLocaleDateString('en-GB')
+    }));
+    totalPages = data.total_pages;
+    initialMovies = formattedData;
 
     return (
         <Popular initialMovies={initialMovies} totalPages={totalPages}/>

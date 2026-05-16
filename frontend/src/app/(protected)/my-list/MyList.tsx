@@ -16,11 +16,12 @@ const MyList = ({ initialMovies, totalPages } : { initialMovies : Movie[], total
     const selectedOrder = searchParams.get('order') || 'ASC';
 
     const handleDelete = async (id : number) => {
-        const response = await fetch(`http://localhost:3000/movies/${id}`, {
+        const response = await fetch(`http://localhost:3001/api/express/movies/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type' : 'application/json'
-            }
+            },
+            credentials: 'include'
         });
         if (response.ok) {
             router.refresh();

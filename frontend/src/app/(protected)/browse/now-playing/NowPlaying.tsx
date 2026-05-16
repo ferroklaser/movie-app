@@ -18,14 +18,17 @@ const NowPlaying = ({ initialMovies, totalPages } : { initialMovies : Movie[], t
             ...movie,
             releaseDate: formatDateToIso(movie.releaseDate)
         }
-        const response = await fetch("http://localhost:3000/movies", {
+
+        const response = await fetch("http://localhost:3001/api/express/movies", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify(formattedMovie)
+            body: JSON.stringify(formattedMovie),
+            credentials: 'include'
         });
         const data = await response.json();
+        
         if (response.status == 409) {
             alert(data.error);
             return;
