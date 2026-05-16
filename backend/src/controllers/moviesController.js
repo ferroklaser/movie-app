@@ -57,18 +57,22 @@ export const insertUserMovie = async (req, res) => {
             .select()
             .single()
 
-        if (error) console.log(error)
+        if (error) {
+            console.log(error)
+
+            if (error.code === '23505') {
+                return res.status(409).json({
+                    success: false,
+                    error: "This movie is already in your watchlist!"
+                })
+            }
+        } 
 
         await notifyActivity(title)
         res.status(201).json(movie);
     } catch (err) {
-        if (err.code === '23505') {
-            res.status(409).json({ error : "The movie is already in your list."})
-        } else {
-            console.error(err.message);
-            res.status(500).send('Error inserting user movie');
-        }
-        
+        console.error(err.message);
+        res.status(500).json('Error inserting user movie');
     }
 }
 

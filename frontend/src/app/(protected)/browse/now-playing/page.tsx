@@ -1,7 +1,7 @@
 import { Movie } from "@/src/components/MovieList"
 import NowPlaying from "./NowPlaying";
 import { cookies } from "next/headers";
-import { serverFetch } from "@/src/utilities/api";
+import { serverFetch } from "@/src/utilities/api/server-api";
 
 const NowPlayingPage = async ({ searchParams } : {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>

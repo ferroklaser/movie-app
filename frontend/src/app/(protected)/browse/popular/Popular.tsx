@@ -1,8 +1,10 @@
 'use client'
-import MovieList, { Movie } from "@/src/components/MovieList";
+import { Movie } from "@/src/model/movies";
+import MovieList from "@/src/components/MovieList";
 import MovieCard from "@/src/components/MovieCard";
 import MyButton from "@/src/components/MyButton";
 import Pagination from "@/src/components/Pagination";
+import AddMovieButton from "@/src/components/Browse/AddMovieButton";
 
 const Popular = ({ initialMovies, totalPages } : { initialMovies : Movie[], totalPages : number }) => {
     
@@ -16,7 +18,7 @@ const Popular = ({ initialMovies, totalPages } : { initialMovies : Movie[], tota
             releaseDate={movie.releaseDate}
         >
             <MyButton label="View" onClick={() => {}}/>
-            <MyButton label="Add" onClick={() => {}}/>
+            <AddMovieButton movie={movie}/>
         </MovieCard>
     )
 

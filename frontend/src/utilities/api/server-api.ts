@@ -26,6 +26,6 @@ export const serverFetch = async (endpoint : string, options : RequestInit = {})
         return { data, response }
     } catch (err : any) {
         console.log(err.message)
-        return { data : null, response : null}
+        return { data : null, response : null }
     }
 }

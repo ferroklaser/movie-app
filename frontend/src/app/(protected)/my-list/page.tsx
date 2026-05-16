@@ -1,6 +1,6 @@
 import { Movie } from "@/src/components/MovieList"
 import MyList from "./MyList";
-import { serverFetch } from "@/src/utilities/api";
+import { serverFetch } from "@/src/utilities/api/server-api";
 
 const MyListPage = async ({ searchParams } : {
      searchParams: Promise<{ [key: string]: string | string[] | undefined }>

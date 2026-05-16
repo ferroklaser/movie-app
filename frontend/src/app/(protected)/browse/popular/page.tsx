@@ -1,6 +1,6 @@
 import Popular from "./Popular"
 import { Movie } from "@/src/components/MovieList";
-import { serverFetch } from "@/src/utilities/api";
+import { serverFetch } from "@/src/utilities/api/server-api";
 
 
 const PopularPage = async ({ searchParams } : {
